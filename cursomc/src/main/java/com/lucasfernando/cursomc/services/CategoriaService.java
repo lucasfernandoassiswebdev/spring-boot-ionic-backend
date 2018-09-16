@@ -1,6 +1,5 @@
 package com.lucasfernando.cursomc.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,20 +13,20 @@ import com.lucasfernando.cursomc.services.exceptions.ObjectNotFoundException;
 public class CategoriaService {
 	@Autowired
 	private CategoriaRepository repository;
-
-	public List<Categoria> get() {
-		List<Categoria> lista = repository.findAll();
-		return lista;
-	}
-
-	public Categoria get(int id) {
+	
+	public Categoria find(int id) {
 		Optional<Categoria> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 
-	public Categoria post(Categoria obj) {
+	public Categoria insert(Categoria obj) {
 		obj.setId(null);
+		return repository.save(obj);
+	}
+
+	public Categoria update(Categoria obj) {
+		find(obj.getId());
 		return repository.save(obj);
 	}
 }

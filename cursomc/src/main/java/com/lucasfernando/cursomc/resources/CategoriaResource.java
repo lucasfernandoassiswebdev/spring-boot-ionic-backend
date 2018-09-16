@@ -1,7 +1,6 @@
 package com.lucasfernando.cursomc.resources;
 
 import java.net.URI;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,23 +19,24 @@ import com.lucasfernando.cursomc.services.CategoriaService;
 public class CategoriaResource {
 	@Autowired
 	private CategoriaService service;
-
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Categoria>> get() {
-		List<Categoria> lista = service.get();
-		return ResponseEntity.ok(lista);
-	}
-
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Categoria> get(@PathVariable Integer id) {
-		Categoria categoria = service.get(id);
+		Categoria categoria = service.find(id);
 		return ResponseEntity.ok(categoria);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> post(@RequestBody Categoria obj) {
-		obj = service.post(obj);
+		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> put(@PathVariable Integer id, @RequestBody Categoria obj) {
+		obj.setId(id);
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
 	}
 }
