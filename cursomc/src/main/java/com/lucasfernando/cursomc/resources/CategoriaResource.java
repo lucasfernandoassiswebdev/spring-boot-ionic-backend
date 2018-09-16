@@ -1,6 +1,8 @@
 package com.lucasfernando.cursomc.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.lucasfernando.cursomc.domain.Categoria;
+import com.lucasfernando.cursomc.dto.CategoriaDTO;
 import com.lucasfernando.cursomc.services.CategoriaService;
 
 @RestController
@@ -19,7 +22,14 @@ import com.lucasfernando.cursomc.services.CategoriaService;
 public class CategoriaResource {
 	@Autowired
 	private CategoriaService service;
-	
+
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> get() {
+		List<Categoria> lista = service.findAll();
+		List<CategoriaDTO> listDTO = lista.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok(listDTO);
+	}
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Categoria> get(@PathVariable Integer id) {
 		Categoria categoria = service.find(id);
@@ -39,7 +49,7 @@ public class CategoriaResource {
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
