@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -29,7 +30,9 @@ public class Cliente implements Serializable {
 	private String cpfCnpj;
 	private Integer tipo;
 
-	@OneToMany(mappedBy = "cliente")
+	// anotação cascate definida com este valor faz com que todos os endereços deste
+	// cliente sejam apagados em cascata ao apagar o cliente
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 
 	@ElementCollection
