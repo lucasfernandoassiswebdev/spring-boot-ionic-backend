@@ -8,8 +8,10 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import com.lucasfernando.cursomc.domain.Cliente;
+import com.lucasfernando.cursomc.services.validation.ClienteUpdate;
 
-public class ClienteDto implements Serializable {
+@ClienteUpdate
+public class ClienteDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
@@ -22,11 +24,11 @@ public class ClienteDto implements Serializable {
 	@Email(message = "Email inválido")	
 	private String email;
 
-	public ClienteDto() {
+	public ClienteDTO() {
 
 	}
 
-	public ClienteDto(Cliente obj) {
+	public ClienteDTO(Cliente obj) {
 		this.id = obj.getId();
 		this.nome = obj.getNome();
 		this.email = obj.getEmail();

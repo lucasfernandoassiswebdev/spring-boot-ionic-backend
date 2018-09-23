@@ -15,7 +15,7 @@ import com.lucasfernando.cursomc.domain.Cidade;
 import com.lucasfernando.cursomc.domain.Cliente;
 import com.lucasfernando.cursomc.domain.Endereco;
 import com.lucasfernando.cursomc.domain.enums.TipoCliente;
-import com.lucasfernando.cursomc.dto.ClienteDto;
+import com.lucasfernando.cursomc.dto.ClienteDTO;
 import com.lucasfernando.cursomc.dto.ClienteNewDTO;
 import com.lucasfernando.cursomc.repositories.ClienteRepository;
 import com.lucasfernando.cursomc.repositories.EnderecoRepository;
@@ -69,7 +69,7 @@ public class ClienteService {
 		}
 	}
 
-	public Cliente fromDto(ClienteDto objDto) {
+	public Cliente fromDto(ClienteDTO objDto) {
 		return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null);
 	}
 

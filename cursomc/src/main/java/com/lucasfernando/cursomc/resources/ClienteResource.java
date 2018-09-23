@@ -20,7 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.lucasfernando.cursomc.domain.Categoria;
 import com.lucasfernando.cursomc.domain.Cliente;
 import com.lucasfernando.cursomc.dto.CategoriaDTO;
-import com.lucasfernando.cursomc.dto.ClienteDto;
+import com.lucasfernando.cursomc.dto.ClienteDTO;
 import com.lucasfernando.cursomc.dto.ClienteNewDTO;
 import com.lucasfernando.cursomc.services.ClienteService;
 
@@ -31,9 +31,9 @@ public class ClienteResource {
 	private ClienteService service;
 			
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<ClienteDto>> get() {
+	public ResponseEntity<List<ClienteDTO>> get() {
 		List<Cliente> lista = service.findAll();
-		List<ClienteDto> listDTO = lista.stream().map(obj -> new ClienteDto(obj)).collect(Collectors.toList());
+		List<ClienteDTO> listDTO = lista.stream().map(obj -> new ClienteDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok(listDTO);
 	}
 	
@@ -44,13 +44,13 @@ public class ClienteResource {
 	}
 	
 	@RequestMapping(value="/page",method = RequestMethod.GET)
-	public ResponseEntity<Page<ClienteDto>> get(
+	public ResponseEntity<Page<ClienteDTO>> get(
 			@RequestParam(value="page", defaultValue="0") Integer page, //RequestParam = URL queryString  
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
 			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
 			@RequestParam(value="direction", defaultValue="ASC") String direction) {
 		Page<Cliente> lista = service.findPage(page, linesPerPage, orderBy, direction);
-		Page<ClienteDto> listDTO = lista.map(obj -> new ClienteDto(obj));
+		Page<ClienteDTO> listDTO = lista.map(obj -> new ClienteDTO(obj));
 		return ResponseEntity.ok(listDTO);
 	}
 	
@@ -63,7 +63,7 @@ public class ClienteResource {
 	}
 		
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> put(@PathVariable Integer id, @Valid @RequestBody ClienteDto clienteDTO) {
+	public ResponseEntity<Void> put(@PathVariable Integer id, @Valid @RequestBody ClienteDTO clienteDTO) {
 		Cliente obj = service.fromDto(clienteDTO);
 		obj.setId(id);
 		obj = service.update(obj);
