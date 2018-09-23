@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.lucasfernando.cursomc.domain.Categoria;
 import com.lucasfernando.cursomc.domain.Cliente;
+import com.lucasfernando.cursomc.dto.CategoriaDTO;
 import com.lucasfernando.cursomc.dto.ClienteDto;
+import com.lucasfernando.cursomc.dto.ClienteNewDTO;
 import com.lucasfernando.cursomc.services.ClienteService;
 
 @RestController
@@ -50,7 +53,14 @@ public class ClienteResource {
 		Page<ClienteDto> listDTO = lista.map(obj -> new ClienteDto(obj));
 		return ResponseEntity.ok(listDTO);
 	}
-
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Void> post(@Valid @RequestBody ClienteNewDTO objDTO) {
+		Cliente obj = service.fromDto(objDTO);
+		obj = service.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
 		
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> put(@PathVariable Integer id, @Valid @RequestBody ClienteDto clienteDTO) {
