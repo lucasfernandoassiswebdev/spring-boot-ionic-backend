@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Profile;
 import com.lucasfernando.cursomc.services.DBService;
 
 @Configuration
-@Profile("test") // configurações específicas do profile de teste(banco de dados em memódia)
+@Profile("devpostgres") // configurações específicas do profile de teste(banco de dados em memódia)
 public class TestConfig {	
 	@Autowired
 	private DBService dbService;
