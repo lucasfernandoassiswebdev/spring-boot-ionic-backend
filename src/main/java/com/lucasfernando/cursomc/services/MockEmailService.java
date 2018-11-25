@@ -6,7 +6,7 @@ import org.springframework.mail.SimpleMailMessage;
 
 public class MockEmailService extends AbstractEmailService {
 	private static final Logger LOG = LoggerFactory.getLogger(MockEmailService.class);
-	
+
 	@Override
 	public void sendEmail(SimpleMailMessage msg) {
 		LOG.info("Simulando envio de e-mail...");
@@ -14,4 +14,3 @@ public class MockEmailService extends AbstractEmailService {
 		LOG.info("Email enviado");
 	}
 }
-	

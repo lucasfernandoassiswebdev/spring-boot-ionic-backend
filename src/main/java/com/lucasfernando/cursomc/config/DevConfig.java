@@ -9,9 +9,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.lucasfernando.cursomc.services.DBService;
+import com.lucasfernando.cursomc.services.EmailService;
+import com.lucasfernando.cursomc.services.SmtpEmailService;
 
 @Configuration
-@Profile("prod")
+@Profile("dev")
 public class DevConfig {
 	@Autowired
 	private DBService dbService;
@@ -27,5 +29,10 @@ public class DevConfig {
 
 		dbService.instantiateTestDatabbase();
 		return true;
+	}
+
+	@Bean
+	public EmailService emailService() {
+		return new SmtpEmailService();
 	}
 }
