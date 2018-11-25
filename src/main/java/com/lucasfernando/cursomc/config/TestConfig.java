@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Profile;
 import com.lucasfernando.cursomc.services.DBService;
 
 @Configuration
-@Profile("devpostgres") 
+@Profile("test") 
 public class TestConfig {	
 	@Autowired
 	private DBService dbService;
